@@ -11,8 +11,7 @@
 
   <style>
     :root{
-      --bg1:#0b1020;
-      --bg2:#101b3b;
+      --bg1:#0b1020; --bg2:#101b3b;
       --glass: rgba(255,255,255,.08);
       --stroke: rgba(255,255,255,.16);
       --text: rgba(255,255,255,.92);
@@ -20,7 +19,6 @@
       --shadow: 0 24px 70px rgba(0,0,0,.35);
       --radius: 22px;
     }
-
     *{ box-sizing:border-box; }
     html,body{ height:100%; }
     body{
@@ -35,40 +33,18 @@
       overflow-x:hidden;
     }
 
-    .blob{
-      position: fixed;
-      filter: blur(44px);
-      opacity: .55;
-      z-index: -1;
-      border-radius: 999px;
-      animation: float 14s ease-in-out infinite;
-      mix-blend-mode: screen;
-    }
-    .blob.b1{ width: 420px; height: 420px; left:-120px; top: 80px; background: #6d7bff; }
-    .blob.b2{ width: 340px; height: 340px; right:-120px; top: 150px; background: #ff4fd8; animation-delay:-3s; }
-    .blob.b3{ width: 380px; height: 380px; left: 35%; bottom:-160px; background: #27ffd1; animation-delay:-6s; }
+    .blob{ position:fixed; filter:blur(44px); opacity:.55; z-index:-1; border-radius:999px;
+      animation: float 14s ease-in-out infinite; mix-blend-mode:screen; }
+    .blob.b1{ width:420px;height:420px; left:-120px; top:80px; background:#6d7bff; }
+    .blob.b2{ width:340px;height:340px; right:-120px; top:150px; background:#ff4fd8; animation-delay:-3s; }
+    .blob.b3{ width:380px;height:380px; left:35%; bottom:-160px; background:#27ffd1; animation-delay:-6s; }
+    @keyframes float{ 0%,100%{transform:translate(0,0) scale(1)} 50%{transform:translate(20px,-18px) scale(1.06)} }
 
-    @keyframes float{
-      0%,100% { transform: translate(0,0) scale(1); }
-      50% { transform: translate(20px,-18px) scale(1.06); }
-    }
-
-    .container{
-      min-height:100%;
-      display:grid;
-      place-items:center;
-      padding: 34px 16px;
-    }
-
-    .shell{
-      width: min(980px, 100%);
-      display:grid;
-      grid-template-columns: 1.05fr .95fr;
-      gap: 18px;
-    }
+    .container{ min-height:100%; display:grid; place-items:center; padding:34px 16px; }
+    .shell{ width:min(980px,100%); display:grid; grid-template-columns:1.05fr .95fr; gap:18px; }
 
     .card{
-      background: rgba(255,255,255,.08);
+      background: var(--glass);
       border: 1px solid var(--stroke);
       border-radius: var(--radius);
       box-shadow: var(--shadow);
@@ -77,85 +53,41 @@
       overflow:hidden;
       position:relative;
     }
-
     .card::before{
-      content:"";
-      position:absolute; inset:0;
+      content:""; position:absolute; inset:0;
       background: linear-gradient(135deg, rgba(255,255,255,.10), rgba(255,255,255,0));
       pointer-events:none;
     }
 
-    header{
-      padding: 22px 22px 14px;
-      display:flex;
-      align-items:flex-start;
-      justify-content:space-between;
-      gap:12px;
-    }
-
-    .brand{
-      display:flex; align-items:flex-start; gap:12px;
-      min-width: 0;
-    }
-
+    header{ padding:22px 22px 14px; display:flex; justify-content:space-between; gap:12px; align-items:flex-start; }
+    .brand{ display:flex; gap:12px; min-width:0; align-items:flex-start; }
     .logo{
-      width:42px; height:42px;
-      border-radius: 14px;
-      display:grid; place-items:center;
+      width:42px;height:42px;border-radius:14px;display:grid;place-items:center; flex:0 0 auto;
       background: radial-gradient(circle at 30% 20%, rgba(255,255,255,.25), transparent 55%),
                   linear-gradient(135deg, rgba(109,123,255,.95), rgba(255,79,216,.85));
-      border: 1px solid rgba(255,255,255,.20);
-      box-shadow: 0 14px 40px rgba(0,0,0,.25);
-      flex: 0 0 auto;
+      border:1px solid rgba(255,255,255,.20);
+      box-shadow:0 14px 40px rgba(0,0,0,.25);
     }
+    .team{ margin:0; font-size:12px; letter-spacing:.22em; text-transform:uppercase; color:rgba(255,255,255,.72); }
+    h1{ margin:6px 0 0; font-size:20px; letter-spacing:.2px; }
+    .sub{ margin:6px 0 0; font-size:12px; color:var(--muted); line-height:1.5; }
 
-    .titleWrap{ min-width:0; }
-    .team{
-      margin:0;
-      font-size: 12px;
-      letter-spacing:.22em;
-      text-transform:uppercase;
-      color: rgba(255,255,255,.72);
-    }
-    h1{
-      font-size: 20px;
-      margin: 6px 0 0;
-      letter-spacing: .2px;
-    }
-    .sub{
-      margin: 6px 0 0;
-      color: var(--muted);
-      font-size: 12px;
-      line-height:1.5;
-    }
+    .badge{ font-size:11px; padding:6px 10px; border-radius:999px;
+      background: rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.14); color:var(--muted); }
 
-    .pillRow{
-      display:flex; gap:10px; flex-wrap:wrap;
-      padding: 0 22px 16px;
-    }
-
+    .pillRow{ display:flex; gap:10px; flex-wrap:wrap; padding:0 22px 16px; }
     .pill{
-      display:flex; align-items:center; gap:8px;
-      padding: 10px 12px;
-      border-radius: 999px;
+      display:flex; align-items:center; gap:8px; padding:10px 12px; border-radius:999px;
       background: rgba(255,255,255,.08);
       border: 1px solid rgba(255,255,255,.14);
       color: var(--muted);
       font-size: 12px;
       font-variant-numeric: tabular-nums;
     }
-    .pill b{ color: var(--text); font-weight: 600; }
+    .pill b{ color:var(--text); font-weight:600; }
 
-    .actions{
-      padding: 0 22px 22px;
-      display:flex;
-      gap: 12px;
-      flex-wrap:wrap;
-      align-items:center;
-    }
-
+    .actions{ padding:0 22px 22px; display:flex; flex-wrap:wrap; gap:12px; align-items:center; }
     .btn{
-      appearance:none;
       border: 1px solid rgba(255,255,255,.16);
       background: rgba(255,255,255,.08);
       color: var(--text);
@@ -165,93 +97,39 @@
       align-items:center;
       gap:10px;
       font-weight: 700;
-      letter-spacing:.2px;
       text-decoration:none;
       transition: transform .12s ease, background .12s ease, border-color .12s ease;
       user-select:none;
     }
     .btn:hover{ transform: translateY(-1px); background: rgba(255,255,255,.12); border-color: rgba(255,255,255,.22); }
-    .btn:active{ transform: translateY(0px) scale(.99); }
-
+    .btn:active{ transform: translateY(0) scale(.99); }
     .btn.primary{
       background: linear-gradient(135deg, rgba(109,123,255,.92), rgba(255,79,216,.80));
       border-color: rgba(255,255,255,.22);
       box-shadow: 0 18px 50px rgba(0,0,0,.25);
     }
 
-    .hint{
-      color: var(--muted);
-      font-size: 12px;
-      line-height:1.5;
-    }
-    code{
-      color: var(--text);
-      background: rgba(255,255,255,.10);
-      border: 1px solid rgba(255,255,255,.12);
-      padding: 2px 8px;
-      border-radius: 999px;
-      font-size: 12px;
-    }
+    .hint{ color: var(--muted); font-size:12px; line-height:1.5; }
+    code{ color: var(--text); background: rgba(255,255,255,.10); border:1px solid rgba(255,255,255,.12);
+      padding:2px 8px; border-radius:999px; font-size:12px; }
 
-    .previewHead{
-      padding: 18px 18px 10px;
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:12px;
-      border-bottom: 1px solid rgba(255,255,255,.12);
-    }
-    .previewTitle{
-      display:flex;
-      align-items:center;
-      gap:10px;
-      min-width:0;
-    }
-    .previewTitle h2{
-      margin:0;
-      font-size: 14px;
-      letter-spacing:.2px;
-      white-space:nowrap;
-      overflow:hidden;
-      text-overflow:ellipsis;
-    }
-    .badge{
-      font-size: 11px;
-      padding: 6px 10px;
-      border-radius: 999px;
-      background: rgba(255,255,255,.08);
-      border: 1px solid rgba(255,255,255,.14);
-      color: var(--muted);
-    }
+    .previewHead{ padding:18px 18px 10px; display:flex; justify-content:space-between; gap:12px; align-items:center;
+      border-bottom:1px solid rgba(255,255,255,.12);}
+    .previewTitle h2{ margin:0; font-size:14px; }
+    .previewBody{ padding:14px 14px 16px; }
+    .frameWrap{ border-radius:16px; overflow:hidden; border:1px solid rgba(255,255,255,.14); background: rgba(0,0,0,.16); height:520px; }
+    iframe{ width:100%; height:100%; border:0; }
 
-    .previewBody{ padding: 14px 14px 16px; }
-
-    .frameWrap{
-      border-radius: 16px;
-      overflow:hidden;
-      border: 1px solid rgba(255,255,255,.14);
-      background: rgba(0,0,0,.16);
-      height: 520px;
-    }
-
-    iframe{ width: 100%; height: 100%; border: 0; }
-
-    @media (max-width: 900px){
-      .shell{ grid-template-columns: 1fr; }
-      .frameWrap{ height: 520px; }
-    }
+    @media (max-width: 900px){ .shell{ grid-template-columns:1fr; } }
   </style>
 </head>
 
 <body>
-  <div class="blob b1"></div>
-  <div class="blob b2"></div>
-  <div class="blob b3"></div>
-  hiii
+  <div class="blob b1"></div><div class="blob b2"></div><div class="blob b3"></div>
+
   <div class="container">
     <div class="shell">
 
-      <!-- Left -->
       <section class="card">
         <header>
           <div class="brand">
@@ -261,91 +139,52 @@
                       stroke="rgba(255,255,255,.95)" stroke-width="1.6" stroke-linejoin="round" />
               </svg>
             </div>
-
-            <div class="titleWrap">
+            <div>
               <p class="team">KGM Techinical Team</p>
               <h1>Zoho Mock Interview</h1>
-              <p class="sub">PDF portal with live date & time, preview, and one-click download.</p>
+              <p class="sub">Download & preview the mock interview PDF (Google Drive hosted) with live date & time.</p>
             </div>
           </div>
-
           <span class="badge" id="tzBadge">Local Time</span>
         </header>
 
         <div class="pillRow">
-          <div class="pill">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-              <path d="M8 2v3M16 2v3M3.5 9h17M5 5h14a1.5 1.5 0 0 1 1.5 1.5V20A2 2 0 0 1 18.5 22h-13A2 2 0 0 1 3.5 20V6.5A1.5 1.5 0 0 1 5 5z"
-                    stroke="rgba(255,255,255,.75)" stroke-width="1.6" stroke-linecap="round"/>
-            </svg>
-            <span><b>Date</b>: <span id="date">--</span></span>
-          </div>
-
-          <div class="pill">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-              <path d="M12 22a10 10 0 1 0-10-10 10 10 0 0 0 10 10z"
-                    stroke="rgba(255,255,255,.75)" stroke-width="1.6"/>
-              <path d="M12 6v6l4 2"
-                    stroke="rgba(255,255,255,.75)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-            <span><b>Time</b>: <span id="time">--</span></span>
-          </div>
-
-          <div class="pill">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-              <path d="M14 2H7a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"
-                    stroke="rgba(255,255,255,.75)" stroke-width="1.6" stroke-linejoin="round"/>
-              <path d="M14 2v6h6" stroke="rgba(255,255,255,.75)" stroke-width="1.6" stroke-linejoin="round"/>
-            </svg>
-            <span><b>File</b>: <span id="fileName">test.pdf</span></span>
-          </div>
+          <div class="pill"><span><b>Date</b>: <span id="date">--</span></span></div>
+          <div class="pill"><span><b>Time</b>: <span id="time">--</span></span></div>
+          <div class="pill"><span><b>File</b>: <span id="fileName">Zoho Mock Interview.pdf</span></span></div>
         </div>
 
         <div class="actions">
-          <a class="btn primary" href="./test.pdf" download="test.pdf">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-              <path d="M12 3v10" stroke="rgba(255,255,255,.95)" stroke-width="1.8" stroke-linecap="round"/>
-              <path d="M8 11l4 4 4-4" stroke="rgba(255,255,255,.95)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-              <path d="M4 20h16" stroke="rgba(255,255,255,.75)" stroke-width="1.8" stroke-linecap="round"/>
-            </svg>
+          <!-- Direct download from Google Drive -->
+          <a class="btn primary"
+             href="https://drive.google.com/uc?export=download&id=1z02XymN9vZkKmWHckNWwbFIRZRubWsNv">
             Download PDF
           </a>
 
-          <a class="btn" href="./test.pdf" target="_blank" rel="noopener">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-              <path d="M14 3h7v7" stroke="rgba(255,255,255,.85)" stroke-width="1.8" stroke-linecap="round"/>
-              <path d="M21 3l-9 9" stroke="rgba(255,255,255,.85)" stroke-width="1.8" stroke-linecap="round"/>
-              <path d="M10 6H6a3 3 0 0 0-3 3v9a3 3 0 0 0 3 3h9a3 3 0 0 0 3-3v-4"
-                    stroke="rgba(255,255,255,.65)" stroke-width="1.8" stroke-linecap="round"/>
-            </svg>
-            Open in new tab
+          <!-- Open the original Drive view link -->
+          <a class="btn"
+             href="https://drive.google.com/file/d/1z02XymN9vZkKmWHckNWwbFIRZRubWsNv/view?usp=drive_link"
+             target="_blank" rel="noopener">
+            Open in Drive
           </a>
 
           <div class="hint">
-            Put the PDF in the same folder as this page.<br/>
-            Expected name: <code>test.pdf</code> (or change the link).
+            If download fails: In Google Drive → Share → set to <code>Anyone with the link</code> (Viewer).
           </div>
         </div>
       </section>
 
-      <!-- Right -->
       <aside class="card">
         <div class="previewHead">
-          <div class="previewTitle">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-              <path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7z"
-                    stroke="rgba(255,255,255,.75)" stroke-width="1.7" stroke-linejoin="round"/>
-              <path d="M12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"
-                    stroke="rgba(255,255,255,.75)" stroke-width="1.7"/>
-            </svg>
-            <h2>Preview</h2>
-          </div>
-          <span class="badge">PDF viewer</span>
+          <div class="previewTitle"><h2>Preview</h2></div>
+          <span class="badge">Google Drive</span>
         </div>
-
         <div class="previewBody">
           <div class="frameWrap">
-            <iframe src="./ZOHO MOCK.pdf" title="PDF Preview"></iframe>
+            <iframe
+              src="https://drive.google.com/file/d/1z02XymN9vZkKmWHckNWwbFIRZRubWsNv/preview"
+              title="PDF Preview">
+            </iframe>
           </div>
         </div>
       </aside>
@@ -355,30 +194,18 @@
 
   <script>
     function pad(n){ return String(n).padStart(2, "0"); }
-
     function updateClock(){
       const now = new Date();
-
-      const y = now.getFullYear();
-      const m = pad(now.getMonth() + 1);
-      const d = pad(now.getDate());
-      document.getElementById("date").textContent = `${y}-${m}-${d}`;
-
-      const hh = pad(now.getHours());
-      const mm = pad(now.getMinutes());
-      const ss = pad(now.getSeconds());
-      document.getElementById("time").textContent = `${hh}:${mm}:${ss}`;
-
+      document.getElementById("date").textContent =
+        `${now.getFullYear()}-${pad(now.getMonth()+1)}-${pad(now.getDate())}`;
+      document.getElementById("time").textContent =
+        `${pad(now.getHours())}:${pad(now.getMinutes())}:${pad(now.getSeconds())}`;
       try{
-        const tz = Intl.DateTimeFormat().resolvedOptions().timeZone;
-        document.getElementById("tzBadge").textContent = tz || "Local Time";
-      } catch {
-        document.getElementById("tzBadge").textContent = "Local Time";
-      }
+        document.getElementById("tzBadge").textContent =
+          Intl.DateTimeFormat().resolvedOptions().timeZone || "Local Time";
+      } catch { document.getElementById("tzBadge").textContent = "Local Time"; }
     }
-
-    updateClock();
-    setInterval(updateClock, 1000);
+    updateClock(); setInterval(updateClock, 1000);
   </script>
 </body>
 </html>
